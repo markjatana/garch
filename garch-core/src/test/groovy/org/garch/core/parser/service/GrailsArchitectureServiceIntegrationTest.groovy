@@ -6,8 +6,12 @@ class GrailsArchitectureServiceIntegrationTest {
 	
 	@Test
 	public void testGenerateArch() {
-		def sampleProjectLocations = [""]
-		generateArch(projectLocations){
+		def sampleProjectLocations = ["resources/org/garch/core/parser/service/"]
+		def arches = new GrailsArchitectureService().generateArch(sampleProjectLocations)
+		arches.each {
+			println it.describe()
+		}		
+		
 	}
 	
 }
