@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.3.6'
+	compile 'org.codehaus.groovy:groovy-all:2.3.6'
 	compile 'junit:junit:4.12'
 }
 task wrapper(type: Wrapper) {

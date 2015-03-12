@@ -6,9 +6,9 @@ class GrailsArchitecture extends Architecture {
 	
 	String grailsVersion
 	String appName
-	String version
+	String appVersion
 
 	String describe(){	
-	   return "$grailsVersion $appName $version"
+	   return "$grailsVersion $appName $appVersion"
 	}
 }
