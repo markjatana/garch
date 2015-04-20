@@ -18,7 +18,10 @@ class DefaultParser {
 		parser.grailsArchitectureService = new GrailsFrameworkParser();
 		parser.frameworkParserFactory = new FrameworkParserFactory()
 		def arches = parser.generateArch(projectLocations)
-		arches.each {println it.describe()}
+		arches.each {
+			println("")
+			println it.describe()
+		}
 	}
 	
 	Collection<File> convertToDirectories(String... projectLocations){
@@ -49,6 +52,18 @@ class DefaultParser {
 		return arches;
 	}
 	
+	/**
+	 * Recursively parses directories generating an @link{Architecture} if
+	 * a suitable @link{FrameworkParser} can be found. If one can be found the
+	 * directory's content's are NOT parsed any further. We assume
+	 * we don't have a framework within a framework.
+	 * 
+	 * If a framework is not found then contained directories are parsed.
+	 *
+	 * @param dirs directories to be parsed
+	 * @param arches list of architectures found during porsing
+	 * @return the list of architectures found
+	 */
 	def parseDirectories(dirs, arches){
 		dirs.each { File file->
 			FrameworkParser fwParser = frameworkParserFactory.getParser(file)

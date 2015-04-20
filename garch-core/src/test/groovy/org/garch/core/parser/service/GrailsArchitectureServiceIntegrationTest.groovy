@@ -8,11 +8,10 @@ class GrailsArchitectureServiceIntegrationTest {
 	@Test
 	public void testGenerateArch() {
 
-		def sampleProjectLocations = ["src/test/resources/org/garch/core/parser/service/test-app"]
+		File sampleProjectLocation = new File("src/test/resources/org/garch/core/parser/service/test-app")
 		def gas = new GrailsFrameworkParser()
-		Collection<GrailsArchitecture> garches = gas.generateArch(sampleProjectLocations)
-		assertEquals(garches.size(), 1)
-		assertEquals(garches[0].appName, 'test-app')
+		GrailsArchitecture garche = gas.generateArch(sampleProjectLocation)
+		assertEquals(garche.appName, 'test-app')
 	}
 	
 }
