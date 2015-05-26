@@ -8,4 +8,8 @@ public class Dependency {
 	def group
 	def name
 	def version
+	
+	def getFullyQualifiedName(){
+		return "$group:$name:$version"
+	}
 }

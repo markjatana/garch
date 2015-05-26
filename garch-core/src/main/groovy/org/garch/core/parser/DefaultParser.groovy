@@ -2,26 +2,35 @@ package org.garch.core.parser;
 
 import static org.junit.Assert.*
 
-import org.garch.core.parser.service.Architecture;
+import org.garch.core.parser.service.Architecture
 import org.garch.core.parser.service.FrameworkParser
 import org.garch.core.parser.service.GrailsFrameworkParser
+import org.garch.graph.Graph
+import org.garch.graph.Grapher
+import org.garch.graph.INode
 
 class DefaultParser {
 	
 	public static def log
 	
 	GrailsFrameworkParser grailsArchitectureService
-	FrameworkParserFactory frameworkParserFactory 
-
-	public static void main(String... projectLocations){
-		DefaultParser parser = new DefaultParser()
-		parser.grailsArchitectureService = new GrailsFrameworkParser();
-		parser.frameworkParserFactory = new FrameworkParserFactory()
-		def arches = parser.generateArch(projectLocations)
-		arches.each {
-			println("")
-			println it.describe()
-		}
+	FrameworkParserFactory frameworkParserFactory
+	GrapherFactory grapherFactory
+	
+	def arches
+	
+	Graph graph
+	
+	/**
+	 * Basic constructor
+	 */
+	public DefaultParser(String... projectLocations){
+	
+		grailsArchitectureService = new GrailsFrameworkParser();
+		frameworkParserFactory = new FrameworkParserFactory()
+		grapherFactory = new GrapherFactory()
+		arches = generateArch(projectLocations)
+		graph = generateGraph(arches)
 	}
 	
 	Collection<File> convertToDirectories(String... projectLocations){
@@ -47,7 +56,7 @@ class DefaultParser {
 	 */
 	def generateArch(String... projectLocations){
 		def dirs = convertToDirectories(projectLocations)
-		Collection<Architecture> arches = []
+		Collection<Architecture> arches = new ArrayList<Architecture>()
 		parseDirectories(dirs, arches)
 		return arches;
 	}
@@ -61,15 +70,15 @@ class DefaultParser {
 	 * If a framework is not found then contained directories are parsed.
 	 *
 	 * @param dirs directories to be parsed
-	 * @param arches list of architectures found during porsing
+	 * @param arches list of architectures found during parsing
 	 * @return the list of architectures found
 	 */
-	def parseDirectories(dirs, arches){
+	def parseDirectories(dirs, Collection<Architecture> arches){
 		dirs.each { File file->
 			FrameworkParser fwParser = frameworkParserFactory.getParser(file)
 			if(fwParser){
 				Architecture arch = fwParser.generateArch(file)
-				arches << arch
+				arches.add(arch)
 			}else {
 				parseDirectories(file.listFiles(), arches)
 			}
@@ -79,6 +88,20 @@ class DefaultParser {
 	
 	def generateGrailsArchitecture(String... projectLocations){
 		return grailsArchitectureService.generateArch(projectLocations);
+	}
+	
+	/**
+	 * Generates a graph for the generated architectures.
+	 * 
+	 * @param arch
+	 */	
+	public Graph generateGraph(Collection <? extends INode> nodes){
+		graph = new Graph(nodes)
+		Collection<Grapher> graphers = grapherFactory.getAllGraphers();
+		graphers.each{
+			 it.graph(graph)
+		}
+		return graph;
 	}
 	
 }

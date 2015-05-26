@@ -1,22 +1,24 @@
 package org.garch.core.parser
 
-import java.io.File;
-
 import org.garch.core.parser.service.FrameworkParser
-import org.garch.core.parser.service.GrailsFrameworkParser
+
 
 class FrameworkParserFactory {
 	
-	Collection<FrameworkParser> parsers = [new GrailsFrameworkParser()]
+	def parsers = ["org.garch.core.parser.service.GrailsFrameworkParser"]
 	
 	/**
-	 * TODO logger required
+	 * Currently the framework parsers are discovered via a hard-coded string in 
+	 * this class.
+	 * TODO create a framework parser annotation. 
+	 * TODO logger required.
 	 * @param dir
 	 * @return
 	 */
 	FrameworkParser getParser(File dir){
 		FrameworkParser compatableParser = null; 
-		for(FrameworkParser parser: parsers){
+		for(String parserClassName: parsers){
+			FrameworkParser parser = (FrameworkParser)this.getClass().classLoader.loadClass( parserClassName)?.newInstance()
 			if(parser.isParseable(dir)){
 					compatableParser = parser
 					break

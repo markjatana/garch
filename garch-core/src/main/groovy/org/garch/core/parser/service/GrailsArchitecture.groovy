@@ -7,11 +7,19 @@ class GrailsArchitecture extends Architecture {
 	String grailsVersion
 	String appName
 	String appVersion
-	Dependencies dependencies 
+	String appGroup
+	Dependencies dependencies
 	
 	String describe(){	
-	   return "$grailsVersion $appName $appVersion"
+	   return fullyQualifiedName
 	}
 	
+	@Override
+	String getName(){
+		return fullyQualifiedName 
+	}
 	
+	String getFullyQualifiedName(){
+		return "$appGroup:$appName:$appVersion"
+	}
 }

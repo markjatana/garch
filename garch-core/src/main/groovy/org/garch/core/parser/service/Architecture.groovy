@@ -1,12 +1,23 @@
 package org.garch.core.parser.service
 
-import org.junit.Test
+import org.garch.graph.Edge
+import org.garch.graph.GraphException;
+import org.garch.graph.INode
 
-abstract class Architecture {
+abstract class Architecture  implements INode{
 	
 	 String name;
+	 List<Edge> edges = []
 
- 	 def describe(){	
-	  
+ 	 abstract def describe();
+	 
+	 public void addEdge(Edge edge) throws GraphException{
+		  edges << edge
+		  edge.addNode(this)
 	 }
+	  
+	 public String toString(){ 
+		 return getName()
+	 }
+	  
 }

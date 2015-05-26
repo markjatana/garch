@@ -9,14 +9,14 @@ class GrailsArchitectureUnitTest {
 		
 		def expectedAppName = "expected_app_name"
 		def expectedAppVersion = "expected_app_version"
-		def expectedGrailsVersion = "expected_grails_version"
-		
+		def expectedAppGroup = "expected_app_group"
+
 		GrailsArchitecture grailsArch = new GrailsArchitecture()
 		grailsArch.appName = expectedAppName
 		grailsArch.appVersion = expectedAppVersion
-		grailsArch.grailsVersion = expectedGrailsVersion
+		grailsArch.appGroup = expectedAppGroup
 		
-		String expectedDescription = "$expectedGrailsVersion $expectedAppName $expectedAppVersion"
+		String expectedDescription = "$expectedAppGroup:$expectedAppName:$expectedAppVersion"
 		assertEquals(expectedDescription, grailsArch.describe())
 	}
 	
