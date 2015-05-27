@@ -18,17 +18,17 @@ class DefaultParserIntegrationTest {
 		 assert parser.arches.size() == 2
 		 def nodes = parser.graph.nodes  
 		 assert nodes.size() == 2
-		 assert nodes.find{it.name == expectedNode1Name }
-		 assert nodes.find{it.name == expectedNode2Name }
 		 
-//		 def parentNodeName = expectedNode1Name
-//		 def childNodeName = expectedNode2Name
-//		 def childNode = nodes.find{it.name == childNodeName }
-//		 
-//		 assert childNode.edges.size() == 1
-//		 Edge edge = childNode.edges[0]
-//		 assert edge instanceof DependencyEdge
-//		 assert edge.nodeA.name == childNodeName
-//		 assert edge.nodeB.name == parentNodeName
+		 def node_1 = nodes.find{it.name == expectedNode1Name } 
+		 assert node_1 != null
+		 
+		 def node_2 = nodes.find{it.name == expectedNode2Name} 
+		 assert node_2 != null
+		 
+		 assert node_2.edges.size() == 1
+		 Edge edge = node_2.edges[0]
+		 assert edge instanceof DependencyEdge
+		 assert edge.nodeA.name == node_2.name
+		 assert edge.nodeB.name == node_1.name
  	}
 }

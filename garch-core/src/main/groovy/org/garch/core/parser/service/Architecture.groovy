@@ -13,7 +13,6 @@ abstract class Architecture  implements INode{
 	 
 	 public void addEdge(Edge edge) throws GraphException{
 		  edges << edge
-		  edge.addNode(this)
 	 }
 	  
 	 public String toString(){ 

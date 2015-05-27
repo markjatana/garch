@@ -9,7 +9,7 @@ package org.garch.graph
  */
 class Edge {
 
-		public static final String EDGE_HAS_NODES_EXCEPTION_MSG = 'This edge is already connected to two nodes - $1 and $2'
+		public static final String EDGE_HAS_NODES_EXCEPTION_MSG = 'This edge is already connected to two nodes - %1$s and %2$s'
 	
 		INode nodeA
 		INode nodeB
@@ -30,7 +30,7 @@ class Edge {
 			}else if(!nodeB){
 				nodeB = node
 			}else {
-				throw new GraphException(EDGE_HAS_NODES_EXCEPTION_MSG.format(nodeA.toString(), nodeB.toString()))
+				throw new GraphException(String.format(EDGE_HAS_NODES_EXCEPTION_MSG, nodeA.toString(), nodeB.toString()))
 			}
 		}
 }

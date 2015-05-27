@@ -8,6 +8,8 @@ import org.garch.graph.Edge
  */
 class DependencyEdge extends Edge {
 
-	 
+	 public String toString(){
+		 return nodeA + " -> " + nodeB
+	 }
 	
 }

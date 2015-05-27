@@ -23,10 +23,13 @@ class GrailsGrapher extends Grapher{
 				 Dependencies dependencies = gArch.getDependencies()
 				 dependencies.runtime.each{Dependency dependency ->
 					  DependencyEdge edge = new DependencyEdge()
-					  edge.addNode(gArch)
 					  INode dependantNode = graph.findNodeByName(dependency.fullyQualifiedName)
-					  edge.addNode(dependantNode)
-					  node.addEdge(edge)
+					  if(dependantNode){
+						  edge.addNode(gArch)
+						  edge.addNode(dependantNode)
+						  node.addEdge(edge)
+					  }
+					  
 				 }
 			 }
 		}

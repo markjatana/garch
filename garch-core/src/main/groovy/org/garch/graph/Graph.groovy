@@ -23,10 +23,10 @@ class Graph {
 	 */
 	public INode findNodeByName(String nodeName){
 		def results = []
-		 def nodes = searchNodes(results, nodes, true){ INode node ->
+		 	searchNodes(results, nodes, true){ INode node ->
 			 return node.name == nodeName
 		 }
-		 results.isEmpty() ?  null : nodes[0] 
+		 results.isEmpty() ?  null : results[0] 
 	}
 	
 	public void searchNodes(Collection<INode> results, Collection<INode> nodes, Boolean findFirst, Closure check){
